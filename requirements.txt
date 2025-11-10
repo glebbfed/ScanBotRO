@@ -1,0 +1,6 @@
+cryptography
+python-dotenv
+telethon
+python-telegram-bot
+openpyxl
+requests

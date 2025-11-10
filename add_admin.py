@@ -5,13 +5,14 @@ import json
 import traceback
 from cryptography.fernet import Fernet
 
-KEY_FILE = "secret.key"
-USERS_FILE = "users.enc"
-
 # -----------------------
 # === Генерация/загрузка ключа ===
 # -----------------------
+KEY_FILE = "./users_data/secret.key"
+
 def generate_key():
+    # Создаем директорию, если она не существует
+    os.makedirs(os.path.dirname(KEY_FILE), exist_ok=True)
     key = Fernet.generate_key()
     with open(KEY_FILE, "wb") as f:
         f.write(key)
@@ -28,7 +29,11 @@ fernet = Fernet(load_key())
 # -----------------------
 # === Загрузка/сохранение пользователей ===
 # -----------------------
+USERS_FILE = "./users_data/users.enc"
+
 def load_users():
+    # Создаем директорию, если она не существует
+    os.makedirs(os.path.dirname(USERS_FILE), exist_ok=True)
     if not os.path.exists(USERS_FILE):
         save_users({"admins": [], "operators": []})
     try:
@@ -61,7 +66,7 @@ def add_admin(tg_id):
     print(f"Пользователь {tg_id} добавлен в администраторы.")
 
 # -----------------------
-# === Main ===
+# === Основная функция ===
 # -----------------------
 if __name__ == "__main__":
     if len(sys.argv) < 2:

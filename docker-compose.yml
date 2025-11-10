@@ -1,0 +1,10 @@
+services:
+  bot:
+    build: .
+    container_name: tgscanbot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./users_data:/app/users_data
+    command: sh -c "python add_admin.py $$FIRST_ADMIN_ID && python main.py $$BOT_TOKEN"
